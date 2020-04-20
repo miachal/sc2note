@@ -1,15 +1,12 @@
 import React from 'react';
-import { Button } from 'antd';
-import './App.css';
+import { Navbar } from './Navbar';
+import GlobalStyle from './style/global';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className='App'>
-        <Button type='primary'>Button</Button>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <>
+    <GlobalStyle />
+    <Navbar />
+  </>
+);
 
 export default App;
