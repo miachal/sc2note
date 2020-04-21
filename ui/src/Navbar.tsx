@@ -5,12 +5,6 @@ import styled from 'styled-components';
 
 
 const StyledTabs = styled(Tabs)`
-  .ant-tabs-bar {
-    border-bottom: 1px solid black;
-  }
-  .ant-tabs-nav-container {
-    border-bottom: 1px;
-  }
 `;
 
 const TabPane = styled(Tabs.TabPane)`
