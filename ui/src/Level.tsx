@@ -3,7 +3,8 @@ import { Progress } from 'antd';
 import styled from 'styled-components';
 
 interface ILevelProps {
-  race: 'terran' | 'zerg' | 'protoss';
+//  race: 'terran' | 'zerg' | 'protoss';
+  race: string;
   level: number;
 };
 
