@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-type LeagueType = null | 'bronze' | 'silver' | 'gold' | 'platinum' | 'diamond' | 'master' | 'grandmaster'
+type LeagueType = undefined | 'bronze' | 'silver' | 'gold' | 'platinum' | 'diamond' | 'master' | 'grandmaster'
 type TierType = 1 | 2 | 3 | 4
 type SizeType = 'small' | 'medium' | 'large'
 
