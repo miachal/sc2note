@@ -33,13 +33,20 @@ const Small = styled(Badge)<{ tier: TierType }>`
   background-position: -145px ${props => (props.tier-1) * (-30)}px;
 `;
 
+const CaptionText = styled.div`
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+`;
+
 interface IBadgeBoxProps {
   league: LeagueType,
   tier: TierType,
   size: SizeType,
+  caption?: string
 };
 
-const BadgeBox :React.FC<IBadgeBoxProps> = ({ size, ...rest }) => {
+const BadgeBox :React.FC<IBadgeBoxProps> = ({ size, caption, ...rest }) => {
   return (
     <div>
       {
@@ -49,6 +56,7 @@ const BadgeBox :React.FC<IBadgeBoxProps> = ({ size, ...rest }) => {
           'large': <Large {...rest} />
         }[size]
       }
+      <CaptionText>{caption}</CaptionText>
     </div>
   );
 };
