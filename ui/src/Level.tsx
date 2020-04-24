@@ -12,6 +12,7 @@ const LevelBox = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px;
+  width: 100px;
 `;
 
 const RaceBox = styled.div`
