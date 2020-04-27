@@ -45,7 +45,6 @@ async function findComplexInformation(players) {
       ...teamsToShow[j],
       ...ladder
     };
-    delete teamsToShow[j].players;
   }
 
   return {

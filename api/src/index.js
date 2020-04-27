@@ -74,7 +74,8 @@ const typeDefs = gql `
     wins: String,
     losses: String,
     played: String,
-    ratio: String
+    ratio: String,
+    players: [Player]
   }
     
   type ComplexInfo {
