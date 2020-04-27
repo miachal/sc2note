@@ -9,6 +9,9 @@ const {
   checkLadder,
   searchTeams
 } = require('./scraper/rankedftw');
+const {
+  findComplexInformation
+} = require('./scraper/scrape');
 
 const typeDefs = gql `
   type Player {
@@ -19,9 +22,14 @@ const typeDefs = gql `
 
   type Snapshot {
     rank: Int,
-    league: String,
+    leagueName: String,
+    totalGames: Int,
     totalWins: Int
-    totalGames: Int
+  }
+
+  type Best {
+    leagueName: String,
+    timeAchieved: Int
   }
 
   type BnetProfile {
@@ -43,8 +51,8 @@ const typeDefs = gql `
     totalGamesThisSeason: Int,
     current1v1LeagueName: String,
     currentBestTeamLeagueName: String,
-    best1v1Finish: ?,
-    bestTeamFinish: ?,
+    best1v1Finish: Best,
+    bestTeamFinish: Best,
     terran_level: Int,
     zerg_leveL: Int,
     protoss_leveL: Int,
@@ -53,13 +61,25 @@ const typeDefs = gql `
     hots: String
   }
 
-  type Teams {
-    
+  type Team {
+    teamId: String,
+    league: String,
+    game: String,
+    mode: String,
+    type: String,
+    rank: String,
+    tier: String,
+    mmr: String,
+    points: String,
+    wins: String,
+    losses: String,
+    played: String,
+    ratio: String
   }
     
   type ComplexInfo {
     players: [BnetProfile],
-    teams: [Teams]
+    teams: [Team]
   }
 
   type Query {
@@ -79,6 +99,10 @@ const resolvers = {
     findBnetId: async (p, {
       id
     }) => await findBnetId(id),
+
+    findComplexInfo: async (p, {
+      names
+    }) => await findComplexInformation(names),
 
   }
 };
