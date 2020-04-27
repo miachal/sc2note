@@ -37,18 +37,20 @@ async function findComplexInformation(players) {
     return JSON.stringify(ids.sort()) === JSON.stringify(profiles.sort())
   });
 
-  for (let j = 0; j < commons.length; ++j) {
-    const ladder = await checkLadder(commons[j]);
-    commons[j] = {
-      ...commons[j],
+  const teamsToShow = players.length > 1 ? [...commons] : [...teams];
+
+  for (let j = 0; j < teamsToShow.length; ++j) {
+    const ladder = await checkLadder(teamsToShow[j]);
+    teamsToShow[j] = {
+      ...teamsToShow[j],
       ...ladder
     };
-    delete commons[j].players;
+    delete teamsToShow[j].players;
   }
 
   return {
     players: bnetProfiles,
-    teams: commons
+    teams: teamsToShow
   };
 }
 
