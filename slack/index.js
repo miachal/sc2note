@@ -72,7 +72,7 @@ bot.on('message', async data => {
 
   if (data.text.startsWith('!check')) {
     const parts = data.text.split(' ').slice(1);
-    const results = askGraphql(parts);
+    const results = await askGraphql(parts);
     results.forEach(r => {
       bot.postMessage(
         data.channel,
