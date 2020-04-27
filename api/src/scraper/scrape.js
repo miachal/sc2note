@@ -34,7 +34,7 @@ async function findComplexInformation(players) {
     players
   }) => {
     const ids = players.map(p => p.id);
-    return JSON.stringify(ids) === JSON.stringify(profiles)
+    return JSON.stringify(ids.sort()) === JSON.stringify(profiles.sort())
   });
 
   for (let j = 0; j < commons.length; ++j) {
