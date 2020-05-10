@@ -32,12 +32,16 @@ async function findBnetId(playerId) {
   const url = `${BASE_URL}/player/${playerId}/`;
   const $ = await scrape(url);
 
-  const [, bnetId] = $('a[class="bnet-link"]')
-    .first()
-    .attr('href')
-    .match(/profile\/(.*)/);
+  try {
+    const [, bnetId] = $('a[class="bnet-link"]')
+      .first()
+      .attr('href')
+      .match(/profile\/(.*)/);
 
-  return bnetId;
+    return bnetId;
+
+  } catch {}
+  return;
 }
 
 async function searchTeams(playerId) {
