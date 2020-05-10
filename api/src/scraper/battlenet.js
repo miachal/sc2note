@@ -31,13 +31,32 @@ async function checkBattlenet(bnetId) {
     }
   } = campaign;
 
+  const {
+    seasonSnapshot,
+    totalRankedSeasonGamesPlayed
+  } = snapshot;
+
+  const prefixedSeasonSnapshot = {};
+  Object.keys(seasonSnapshot).forEach(k => {
+    if (k.length === 3) {
+      prefixedSeasonSnapshot[`_${k}`] = seasonSnapshot[k];
+    } else {
+      prefixedSeasonSnapshot[k] = seasonSnapshot[k];
+    }
+  })
+
   return {
     summary: omit(summary, [
+      'id',
+      'realm',
       'decalTerran',
       'decalProtoss',
       'decalZerg'
     ]),
-    snapshot,
+    snapshot: {
+      totalRankedSeasonGamesPlayed,
+      seasonSnapshot: prefixedSeasonSnapshot
+    },
     career,
     swarmLevels,
     campaign: {
