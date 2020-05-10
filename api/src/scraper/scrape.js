@@ -8,6 +8,30 @@ const {
   checkBattlenet
 } = require('./battlenet');
 
+async function getPlayerInformation(rankedftwId) {
+  if (typeof rankedftwId !== 'number') {
+    return;
+  }
+
+  const battlenetId = await findBnetId(rankedftwId);
+  if (!battlenetId) {
+    return;
+  }
+
+  const teams = (await searchTeams(rankedftwId)).map(({
+    teamId
+  }) => +teamId);
+
+  const battlenetProfile = await checkBattlenet(battlenetId);
+
+  return {
+    rankedftwId,
+    battlenetId,
+    ...battlenetProfile,
+    teams
+  };
+}
+
 
 async function findComplexInformation(players) {
   const profiles = [];
@@ -54,5 +78,6 @@ async function findComplexInformation(players) {
 }
 
 module.exports = {
-  findComplexInformation
+  findComplexInformation,
+  getPlayerInformation
 };
