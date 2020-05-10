@@ -1,112 +1,71 @@
+require('dotenv').config();
+const mongoose = require('mongoose');
+const Player = require('./models/Player');
+
 const express = require('express');
 const {
   ApolloServer,
   gql
 } = require('apollo-server-express');
+const typeDefs = require('./types');
 const {
-  searchPlayers,
-  findBnetId,
-  checkLadder,
-  searchTeams
+  get
+} = require('lodash');
+
+const {
+  searchPlayers
 } = require('./scraper/rankedftw');
 const {
-  findComplexInformation
+  getPlayerInformation
 } = require('./scraper/scrape');
 
-const typeDefs = gql `
-  type Player {
-    id: String,
-    name: String,
-    bnetId: String,
-  }
+const {
+  diffInMinutes
+} = require('./helpers');
 
-  type Snapshot {
-    rank: Int,
-    leagueName: String,
-    totalGames: Int,
-    totalWins: Int
-  }
+mongoose.connect(`${process.env.MONGO_DB}`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+});
+const connection = mongoose.connection;
+connection.on('error', () => {
+  console.log('failed');
+});
+connection.on('open', () => {
+  console.log('Connected!');
+});
 
-  type Best {
-    leagueName: String,
-    timeAchieved: Int
-  }
-
-  type BnetProfile {
-    id: String,
-    realm: Int,
-    portrait: String,
-    totalSwarmLevel: Int,
-    totalAchievementPoints: Int,
-    snapshot_1v1: Snapshot,
-    snapshot_2v2: Snapshot,
-    snapshot_3v3: Snapshot,
-    snapshot_4v4: Snapshot,
-    snapshot_archon: Snapshot,
-    totalRankedSeasonGamesPlayed: Int,
-    terranWins: Int,
-    zergWins: Int,
-    protossWins: Int,
-    totalCareerGames: Int,
-    totalGamesThisSeason: Int,
-    current1v1LeagueName: String,
-    currentBestTeamLeagueName: String,
-    best1v1Finish: Best,
-    bestTeamFinish: Best,
-    terran_level: Int,
-    zerg_leveL: Int,
-    protoss_leveL: Int,
-    lotv: String,
-    wol: String,
-    hots: String
-  }
-
-  type Team {
-    teamId: String,
-    league: String,
-    game: String,
-    mode: String,
-    type: String,
-    rank: String,
-    tier: String,
-    mmr: String,
-    points: String,
-    wins: String,
-    losses: String,
-    played: String,
-    ratio: String,
-    players: [Player]
-  }
-    
-  type ComplexInfo {
-    players: [BnetProfile],
-    teams: [Team]
-  }
-
-  type Query {
-    searchPlayers(name: String!, strict: Boolean): [Player],
-    findBnetId(id: String): String,
-    findComplexInfo(names: [String!]): ComplexInfo
-  }
-`;
 
 const resolvers = {
   Query: {
-    searchPlayers: async (p, {
-      name,
-      strict
-    }) => await searchPlayers(name, strict),
+    searchId: async (p, {
+      name
+    }) => get(await searchPlayers(name), '[0].id'),
 
-    findBnetId: async (p, {
+    searchProfile: async (p, {
       id
-    }) => await findBnetId(id),
-
-    findComplexInfo: async (p, {
-      names
-    }) => await findComplexInformation(names),
-
+    }) => {
+      const player = await Player.findOne({
+        rankedftwId: id
+      });
+      if (player && diffInMinutes(player.updatedAt) <= 15) {
+        console.log('get from cache');
+        return player;
+      }
+      const playerInfo = await getPlayerInformation(id);
+      const result = await Player.findOneAndUpdate({
+        rankedftwId: playerInfo.rankedftwId
+      }, playerInfo, {
+        upsert: true,
+        new: true
+      });
+      return result;
+    }
   }
 };
+
+
 
 const server = new ApolloServer({
   typeDefs,
