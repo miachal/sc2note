@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
+const Note = require('./Note');
 
 const schema = new mongoose.Schema({
   rankedftwId: Number,
   battlenetId: String,
-  name: String,
-  portrait: String,
-  totalSwarmLevel: Number,
-  totalAchievementPoints: Number,
+  summary: {
+    displayName: String,
+    portrait: String,
+    totalSwarmLevel: Number,
+    totalAchievementPoints: Number
+  },
   snapshot: {
     seasonSnapshot: {
       _1v1: {
@@ -52,11 +55,11 @@ const schema = new mongoose.Schema({
     currentBestTeamLeagueName: String,
     best1v1Finish: {
       leagueName: String,
-      timesArchived: Number
+      timesAchieved: Number
     },
     bestTeamFinish: {
       leagueName: String,
-      timesArchived: Number
+      timesAchieved: Number
     }
   },
   swarmLevels: {
@@ -82,9 +85,24 @@ const schema = new mongoose.Schema({
     wol: String,
     hots: String
   },
-  teams: [Number],
+  teams: [Number]
 }, {
   timestamps: true
 });
+
+schema.methods.findNotes = async function () {
+  const notes = await Note.find({
+    players: {
+      $elemMatch: {
+        $eq: this._id
+      }
+    }
+  }, {
+    "icon": 1,
+    "note": 1,
+    "created": 1
+  });
+  return notes;
+}
 
 module.exports = mongoose.model('Player', schema);

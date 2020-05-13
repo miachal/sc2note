@@ -4,15 +4,15 @@ const {
 
 module.exports = gql `
   type PlayerType {
+    _id: String,
     rankedftwId: Int,
     battlenetId: String,
-    portrait: String,
-    totalSwarmLevel: Int,
-    totalAchievementPoints: Int,
+    summary: SummaryType
     snapshot: SnapshotType,
     career: CareerType,
     swarmLevels: SwarmType,
     campaign: CampaignType,
-    teams: [Int]
+    teams: [Int],
+    notes: [NoteType]
   }
 `;

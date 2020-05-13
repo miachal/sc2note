@@ -5,7 +5,7 @@ const {
 module.exports = gql `
   type LeagueType {
     leagueName: String,
-    timesArchived: Int
+    timesAchieved: Int
   }
 
   type CareerType {

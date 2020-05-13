@@ -2,21 +2,16 @@ import React from 'react';
 import { Progress } from 'antd';
 import styled from 'styled-components';
 
-interface ILevelProps {
-//  race: 'terran' | 'zerg' | 'protoss';
-  race: string;
-  level: number;
-};
-
 const LevelBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  margin: 3px 20px;
   width: 100px;
 `;
 
 const RaceBox = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const RaceLevelBox = styled.div`
@@ -29,16 +24,18 @@ const RaceLevelBox = styled.div`
   margin-bottom: 7px;
 `;
 
-const Level :React.FC<ILevelProps> = ({ race, level }) => (
-  <LevelBox>    
+interface ILevelProps {
+  //  race: 'terran' | 'zerg' | 'protoss';
+  race: any;
+  level: number;
+};
+
+const Level: React.FC<ILevelProps> = ({ race, level }) => (
+  <LevelBox>
     <RaceBox>
       <img src={`/img/symbols/${race}.png`} alt={race} />
-      <RaceLevelBox>
-        <div>{race}</div>
-        <div>Level {level}</div>
-      </RaceLevelBox>
     </RaceBox>
-     <Progress percent={level * 2} showInfo={false} />
+    <Progress percent={level * 2} showInfo={false} />
   </LevelBox>
 );
 
