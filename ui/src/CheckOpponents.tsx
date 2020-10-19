@@ -9,101 +9,8 @@ import { Alert, Button } from 'antd';
 import { ArrowRightOutlined, TeamOutlined } from '@ant-design/icons';
 import usePrevious from './hooks/usePrevious';
 import { Loading } from './Loading';
-
-const SEARCH_PROFILE = gql`
-  query search($id: Int!) {
-    searchProfile(id: $id) {
-      _id
-      rankedftwId
-      battlenetId
-      summary {
-        displayName
-        portrait
-        totalSwarmLevel
-        totalAchievementPoints
-      }
-      snapshot {
-        seasonSnapshot {
-          _1v1 {
-            rank
-            leagueName
-            totalWins
-            totalGames
-          }
-          _2v2 {
-            rank
-            leagueName
-            totalWins
-            totalGames
-          }
-          _3v3 {
-            rank
-            leagueName
-            totalWins
-            totalGames
-          }
-          _4v4 {
-            rank
-            leagueName
-            totalWins
-            totalGames
-          }
-          Archon {
-            rank
-            leagueName
-            totalWins
-            totalGames
-          }
-        }
-        totalRankedSeasonGamesPlayed
-      }
-      career {
-        terranWins
-        zergWins
-        protossWins
-        totalCareerGames
-        current1v1LeagueName
-        currentBestTeamLeagueName
-        best1v1Finish {
-          leagueName
-          timesAchieved
-        }
-        bestTeamFinish {
-          leagueName
-          timesAchieved
-        }
-      }
-      swarmLevels {
-        level
-        terran {
-          level
-          maxLevelPoints
-          currentLevelPoints
-        }
-        zerg {
-          level
-          maxLevelPoints
-          currentLevelPoints
-        }
-        protoss {
-          level
-          maxLevelPoints
-          currentLevelPoints
-        }
-      }
-      campaign {
-        lotv
-        wol
-        hots
-      }
-      teams
-      notes {
-        icon
-        note
-      }
-    }
-  }
-`;
+import { SEARCH_PROFILE } from './queries/searchProfile';
+import { FIND_IDS } from './queries/findIds';
 
 const LoadProfile: React.FC<{
   id: number;
@@ -140,15 +47,6 @@ const LoadProfile: React.FC<{
   }
   return <ProfileBox player={data.searchProfile} />;
 };
-
-const FIND_IDS = gql`
-  query find($names: [String]!) {
-    searchIds(names: $names) {
-      id
-      name
-    }
-  }
-`;
 
 const RRow = styled.div`
   display: grid;
