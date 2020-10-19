@@ -2,22 +2,28 @@ const {
   searchPlayers,
   findBnetId,
   searchTeams,
-  checkLadder
+  checkLadder,
 } = require('./rankedftw');
-const {
-  checkBattlenet
-} = require('./battlenet');
+const { checkBattlenet } = require('./battlenet');
 
-const {
-  findComplexInformation,
-  getPlayerInformation
-} = require('./scrape');
+const { findComplexInformation, getPlayerInformation } = require('./scrape');
 
 (async () => {
-  const id = 2706895;
-  const gpi = await getPlayerInformation(id);
-  console.log(gpi);
+  const p = 'grassmouse';
+  const gid = 1606994;
+  const p_rankedid = 3273097;
+  const p_bn = '2/1/4314765';
+  let r;
+  // r = await searchPlayers(p);
+  // r = await findBnetId(p_rankedid);
+  // r = await searchTeams(p_rankedid);
+  // console.log(r);
 
-  const ss = gpi.snapshot.seasonSnapshot;
-  console.log(ss);
+  // console.log(await checkLadder(r[0]));
+
+  // const j = await searchTeams(gid);
+  // console.log(j);
+
+  r = await checkBattlenet(p_bn);
+  console.log(r);
 })();

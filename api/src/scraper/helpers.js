@@ -18,19 +18,6 @@ async function scrape(url, format = 'html') {
   }
 }
 
-
-function splitLadder(ladderUrl) {
-  const match = ladderUrl.match('(lotv|hots|wot)\/(((\w)-)*(.*))\/ladder-rank').slice(1, 3);
-  const game = match[0];
-  const [mode, type] = match[1].split('-').reverse();
-  return [
-    game,
-    mode,
-    type
-  ];
-}
-
 module.exports = {
   scrape,
-  splitLadder
 };
