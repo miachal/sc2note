@@ -6,11 +6,9 @@ import LevelBox from './LevelBox';
 import SnapContainer from './SnapContainer';
 import Notes from './Notes';
 
-
-
 interface IProfileBoxProps {
   player: any;
-};
+}
 
 const ProfileBoxContainer = styled.div`
   width: 100%;
@@ -20,11 +18,9 @@ const ProfileBoxContainer = styled.div`
 `;
 
 const NameContainer = styled.div`
-  font: 600 18px "Exo 2";
+  font: 600 18px 'Exo 2';
   color: #000;
 `;
-;
-
 const ProfileBox: React.FC<IProfileBoxProps> = ({ player }) => {
   const { summary, career, swarmLevels, snapshot } = player || {};
   return (
@@ -33,7 +29,11 @@ const ProfileBox: React.FC<IProfileBoxProps> = ({ player }) => {
       <ProfileBoxContainer>
         <div>
           <div>
-            <img style={{ objectFit: 'contain' }} src={summary.portrait} alt='profile' />
+            <img
+              style={{ objectFit: 'contain' }}
+              src={summary.portrait}
+              alt='profile'
+            />
           </div>
           <BestBox career={career} />
         </div>
@@ -41,8 +41,8 @@ const ProfileBox: React.FC<IProfileBoxProps> = ({ player }) => {
         <SnapContainer snapshot={snapshot} />
         <Notes id={player._id} />
       </ProfileBoxContainer>
-    </div >
+    </div>
   );
-}
+};
 
 export default ProfileBox;
