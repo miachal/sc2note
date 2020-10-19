@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const SEARCH_PROFILE = gql`
-  query search($id: Int!) {
-    searchProfile(id: $id) {
+export const SEARCH_PROFILES_BY_NAMES = gql`
+  query search($names: [String]!) {
+    searchProfilesByNames(names: $names) {
       _id
       rankedftwId
       battlenetId
@@ -90,6 +90,7 @@ export const SEARCH_PROFILE = gql`
       notes {
         icon
         note
+        created
       }
     }
   }

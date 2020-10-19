@@ -1,17 +1,16 @@
-const {
-  gql
-} = require('apollo-server-express');
+const { gql } = require('apollo-server-express');
 
-module.exports = gql `
+module.exports = gql`
   type IdNamePair {
-    id: Int,
+    id: Int
     name: String
   }
 
   type Query {
-    searchId(name: String!): [IdNamePair],
-    searchIds(names: [String]!): [IdNamePair],
-    searchProfile(id: Int!): PlayerType,
+    searchProfilesByNames(names: [String]!): [PlayerType]
+    searchId(name: String!): [IdNamePair]
+    searchIds(names: [String]!): [IdNamePair]
+    searchProfile(id: Int!): PlayerType
     searchProfiles(ids: [Int]!): [PlayerType]
     getNotes(playerIds: [String]): [NoteType]
   }
@@ -19,5 +18,4 @@ module.exports = gql `
   type Mutation {
     addNote(note: NoteInput): NoteType
   }
-
 `;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import styled from 'styled-components';
-import Find from './Find';
+// import Find from './Find';
+import Find from './components/Find';
 import ProfileBox from './Profile';
 import { real_mock_1, real_mock_2 } from './mock';
 import { useQuery, useLazyQuery, gql } from '@apollo/client';
@@ -9,8 +10,7 @@ import { Alert, Button } from 'antd';
 import { ArrowRightOutlined, TeamOutlined } from '@ant-design/icons';
 import usePrevious from './hooks/usePrevious';
 import { Loading } from './Loading';
-import { SEARCH_PROFILE } from './queries/searchProfile';
-import { FIND_IDS } from './queries/findIds';
+import { SEARCH_PROFILES_BY_NAMES } from './queries';
 
 const LoadProfile: React.FC<{
   id: number;
@@ -19,7 +19,7 @@ const LoadProfile: React.FC<{
   active?: boolean;
   toggleProfile?: any;
 }> = ({ id, name, mini, active, toggleProfile }) => {
-  const { loading, error, data } = useQuery(SEARCH_PROFILE, {
+  const { loading, error, data } = useQuery(SEARCH_PROFILES_BY_NAMES, {
     variables: { id },
   });
 
@@ -105,7 +105,7 @@ const LoadFullProfiles: React.FC<{ ids: number[] }> = ({ ids }) => (
 );
 
 const CheckOpponents = () => {
-  const [getIds, { loading, data }] = useLazyQuery(FIND_IDS, {
+  const [getIds, { loading, data }] = useLazyQuery(SEARCH_PROFILES_BY_NAMES, {
     // onCompleted: ({ searchIds }) => {
     // setIds(searchIds);
     // }
@@ -161,12 +161,13 @@ const CheckOpponents = () => {
 
   return (
     <>
-      <Find
+      {/* <Find
         value={input}
         handleSearch={handleInput}
         handleSingle={handleSingle}
         handleMulti={handleMulti}
-      />
+      /> */}
+      <Find findSingle={() => {}} />
       {component}
     </>
   );
