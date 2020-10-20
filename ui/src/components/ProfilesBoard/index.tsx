@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Profile } from '../../types';
 import Thumbnail from './Thumbnail';
-import { Grid } from './styles';
+import { ProfilesContainer, Grid, NextButton } from './styles';
 
 interface ProfilesBoardProps {
   profiles: Array<Profile>;
 }
 
-export default ({ profiles }: ProfilesBoardProps) => (
-  <Grid>
-    {profiles.map((profile) => (
-      <Thumbnail profile={profile} />
-    ))}
-  </Grid>
-);
+export default ({ profiles }: ProfilesBoardProps) => {
+  const [selectedProfiles, setSelectedProfiles] = useState<Array<Profile>>([]);
+
+  return (
+    <ProfilesContainer>
+      <Grid>
+        {profiles.map((profile) => (
+          <Thumbnail profile={profile} />
+        ))}
+      </Grid>
+      <NextButton disabled>Go.</NextButton>
+    </ProfilesContainer>
+  );
+};
