@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { SEARCH_PROFILES_BY_NAMES } from '../../queries';
 import Find from '../../components/Find';

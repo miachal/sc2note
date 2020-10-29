@@ -1,3 +1,21 @@
+export type League =
+  | undefined
+  | 'bronze'
+  | 'silver'
+  | 'gold'
+  | 'platinum'
+  | 'diamond'
+  | 'master'
+  | 'grandmaster';
+
+export type Tier = number;
+
+export type Size = 'small' | 'medium' | 'large';
+
+export type Race = 'zerg' | 'protoss' | 'terran' | 'random';
+
+export type TypeOfSnapshot = '_1v1' | '_2v2' | '_3v3' | '_4v4' | 'Archon';
+
 export interface Swarm {
   level: number;
   maxLevelPoints: number;
@@ -6,7 +24,7 @@ export interface Swarm {
 
 export interface Snapshot {
   rank: number;
-  leagueName: string | null;
+  leagueName: League;
   totalWins: number;
   totalGames: number;
 }
@@ -24,6 +42,22 @@ export interface Summary {
   totalSwarmLevel: number;
 }
 
+export interface LeagueAchieved {
+  leagueName: League;
+  timesAchieved: number;
+}
+
+export interface Career {
+  best1v1Finish: LeagueAchieved;
+  bestTeamFinish: LeagueAchieved;
+  current1v1LeagueName: League;
+  currentBestTeamLeagueName: League;
+  protossWins: number;
+  terranWins: number;
+  zergWins: number;
+  totalCareerGames: number;
+}
+
 export interface MiniProfile {
   _id: string;
   battlenedId: string;
@@ -31,40 +65,33 @@ export interface MiniProfile {
   summary: Summary;
 }
 
+export interface SwarmLevels {
+  level: number;
+  terran: Swarm;
+  zerg: Swarm;
+  protoss: Swarm;
+}
+
+export interface SeasonSnapshot {
+  Archon: Snapshot;
+  _1v1: Snapshot;
+  _2v2: Snapshot;
+  _3v3: Snapshot;
+  _4v4: Snapshot;
+}
+
 export interface Profile extends MiniProfile {
   teams: Array<number>;
-  swarmLevels: {
-    level: number;
-    swarms: Array<Swarm>;
-  };
+  swarmLevels: SwarmLevels;
   campaign: {
     lots: string | null;
     wol: string | null;
     hots: string | null;
   };
-  career: {
-    best1v1Finish: {
-      leagueName: string | null;
-      timesAchieved: number;
-    };
-    bestTeamFinish: {
-      leagueName: string | null;
-      timesAchieved: number;
-    };
-    current1v1LeagueName: string | null;
-    currentBestTeamLeagueName: string | null;
-    protossWins: number;
-    terranWins: number;
-    zergWins: number;
-    totalCareerGames: number;
-  };
+  career: Career;
   snapshot: {
     totalRankedSeasonGamesPlayer: number;
-    Archon: Snapshot;
-    _1v1: Snapshot;
-    _2v2: Snapshot;
-    _3v3: Snapshot;
-    _4v4: Snapshot;
+    seasonSnapshot: SeasonSnapshot;
   };
   notes: Array<Note>;
 }
