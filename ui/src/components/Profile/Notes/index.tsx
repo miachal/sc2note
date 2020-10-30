@@ -25,8 +25,8 @@ export default ({ id }: NotesProps) => {
     variables: { id },
   });
 
-  const [addNote] = useMutation<Note>(ADD_NOTE, {
-    update(cache, { data: { addNote } }) {
+  const [addNote] = useMutation(ADD_NOTE, {
+    update(cache, { data: { addNote: Note } }) {
       const notes = cache.readQuery<NotesData>({
         query: GET_NOTES,
         variables: { id },
