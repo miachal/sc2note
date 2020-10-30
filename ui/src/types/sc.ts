@@ -1,3 +1,5 @@
+import { Note } from './note';
+
 export type League =
   | undefined
   | 'bronze'
@@ -27,12 +29,6 @@ export interface Snapshot {
   leagueName: League;
   totalWins: number;
   totalGames: number;
-}
-
-export interface Note {
-  created: string;
-  icon: string;
-  note: string;
 }
 
 export interface Summary {

@@ -14,28 +14,35 @@ const InputRow = styled.div`
   justify-content: space-between;
 `;
 
-
 const NotesInput: React.FC<{ handleAddNote: any }> = ({ handleAddNote }) => {
   const [note, setNote] = useState('');
   const icon = useRef();
 
-  const handleInput = (e: ChangeEvent<HTMLInputElement>) => setNote(e.target.value);
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) =>
+    setNote(e.target.value);
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    console.log('Wyslano!');
     handleAddNote({
       icon: icon.current,
-      note
+      note,
     });
     setNote('');
-  }
+  };
 
   return (
     <InputRow>
       <IconPicker iconRef={icon} />
-      <Input size='small' value={note} onChange={handleInput} onPressEnter={handleSubmit} />
-      <ButtonWithoutBorder onClick={handleSubmit}><PlusOutlined /></ButtonWithoutBorder>
+      <Input
+        size='small'
+        value={note}
+        onChange={handleInput}
+        onPressEnter={handleSubmit}
+      />
+      <ButtonWithoutBorder onClick={handleSubmit}>
+        <PlusOutlined />
+      </ButtonWithoutBorder>
     </InputRow>
-
   );
 };
 

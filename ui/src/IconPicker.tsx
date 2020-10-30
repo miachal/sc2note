@@ -1,4 +1,10 @@
-import React, { useState, ReactElement, useEffect, SyntheticEvent, RefObject } from 'react';
+import React, {
+  useState,
+  ReactElement,
+  useEffect,
+  SyntheticEvent,
+  RefObject,
+} from 'react';
 import styled from 'styled-components';
 import { Popover, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
@@ -15,14 +21,11 @@ const IconSpan = styled.span`
   font-size: 24px;
 `;
 
-
-const icons = [
-  '💩', '👍', '👎', '🧠', '👣', '💨', '🔥', '🙈'
-];
+const icons = ['💩', '👍', '👎', '🧠', '👣', '💨', '🔥', '🙈'];
 
 interface IIConPicker {
   iconRef: any;
-};
+}
 
 const IconPicker: React.FC<IIConPicker> = ({ iconRef }) => {
   const [icon, setIcon] = useState('💩');
@@ -32,11 +35,18 @@ const IconPicker: React.FC<IIConPicker> = ({ iconRef }) => {
   }, [icon]);
 
   return (
-    <Popover content={
-      <div>
-        {icons.map(icon => <ButtonWithoutBorder onClick={() => setIcon(icon)}>{icon}</ButtonWithoutBorder>)}
-      </div>
-    } trigger='click'>
+    <Popover
+      content={
+        <div>
+          {icons.map((icon) => (
+            <ButtonWithoutBorder onClick={() => setIcon(icon)}>
+              {icon}
+            </ButtonWithoutBorder>
+          ))}
+        </div>
+      }
+      trigger='hover'
+    >
       <ButtonWithoutBorder>
         <IconSpan>{icon}</IconSpan>
       </ButtonWithoutBorder>

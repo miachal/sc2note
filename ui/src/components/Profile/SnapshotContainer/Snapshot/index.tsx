@@ -1,7 +1,7 @@
 import React from 'react';
 import { Progress } from 'antd';
 import { Snapshot, TypeOfSnapshot } from '../../../../types';
-import { SnapshotContainer, SingleUnit } from './styles';
+import { Details, SnapshotContainer, SingleUnit } from './styles';
 
 import Badge from '../../Badge';
 
@@ -18,18 +18,18 @@ export default ({
   const strokeColor = totalGames > 0 ? '#bd1816' : '#e0e0e0';
   return (
     <SnapshotContainer>
-      <Badge league={leagueName} size='medium' tier={1} />
       <SingleUnit>
-        <div>
+        <Badge league={leagueName} size='medium' tier={1} />
+        <Details>
           <span>{type}</span> - {totalWins} wins | {totalGames} games ({' '}
           {ratio || 0}% )
-        </div>
-        <Progress
-          percent={100}
-          successPercent={ratio || 0}
-          showInfo={false}
-          strokeColor={strokeColor}
-        />
+          <Progress
+            percent={100}
+            successPercent={ratio || 0}
+            showInfo={false}
+            strokeColor={strokeColor}
+          />
+        </Details>
       </SingleUnit>
     </SnapshotContainer>
   );

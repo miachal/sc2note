@@ -24,8 +24,7 @@ export default ({ profile }: ProfileProps) => {
         </div>
         <SwarmContainer data={profile.swarmLevels} />
         <SnapshotContainer data={profile.snapshot.seasonSnapshot} />
-        {/* <Notes id={profile._id} /> */}
-        <Notes />
+        <Notes id={profile._id} />
       </ProfileFrame>
     </ProfileContainer>
   );
