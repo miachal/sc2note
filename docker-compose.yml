@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+      - internal
+
+  api:
+    build: './api'
+    restart: unless-stopped
+    environment:
+      MONGO_DB: mongodb://admin:password@mongodb/admin
+    depends_on:
+      - mongodb
+    networks:
+      - internal
+      - external
+    ports:
+      - 4000:4000
+
+  ui:
+    build: './ui'
+    restart: unless-stopped
+    depends_on:
+      - api
+    networks:
+      - internal
+      - external
+    ports:
+      - 9000:80
+
+networks:
+  internal:
+    driver: bridge
+    internal: true
+
+  external:
+    driver: bridge
