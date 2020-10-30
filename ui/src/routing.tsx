@@ -4,7 +4,7 @@ import { TeamOutlined } from '@ant-design/icons';
 import { Route } from './types';
 
 import CheckOpponents from './views/CheckOpponents';
-import { Loading } from './Loading';
+import Loading from './components/Loading';
 
 export const routes: Array<Route> = [
   {
